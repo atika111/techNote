@@ -1,5 +1,5 @@
 const express = require("express");
-require("dotenv").config();
+require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3500;
 const path = require("path");
@@ -12,9 +12,7 @@ const connectDB = require("./config/dbConn");
 const mongoose = require("mongoose");
 const { logEvents } = require("./middlewares/logger");
 
-console.log(process.env.NODE_ENV);
 
-connectDB();
 
 app.use(logger);
 
@@ -27,6 +25,9 @@ app.use(cookieParser());
 app.use("/", express.static(path.join(__dirname, "public")));
 
 app.use("/", require("./routes/root"));
+
+app.use('/users', require('./routes/userRoute'))
+app.use('/notes', require('./routes/noteRoutes.js'))
 
 app.all("*", (req, res) => {
   res.status(404);
